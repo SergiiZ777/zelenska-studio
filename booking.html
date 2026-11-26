@@ -1,0 +1,612 @@
+<title>Zelenska Studio Booking</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=DM+Sans:wght@400;500;600&display=swap">
+
+<style>
+:root {
+  --bg: #ffffff;
+  --bg-alt: #faf7f3;
+  --gold: #BFA265;
+  --gold-hover: #A8894F;
+  --blush: #f5eded;
+  --ink: #2D2226;
+  --ink-mid: #5A4D50;
+  --mute: #897D7F;
+  --border: #E6DDD5;
+  --cta-fg: #2D2226;
+  --font-display: 'Cormorant Garamond', Georgia, 'Times New Roman', serif;
+  --font-body: 'DM Sans', 'Helvetica Neue', Arial, sans-serif;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #191416;
+    --bg-alt: #211C1E;
+    --gold: #D4B576;
+    --gold-hover: #E0C48A;
+    --blush: #2A2025;
+    --ink: #EDE6E4;
+    --ink-mid: #B5A8AA;
+    --mute: #8F8385;
+    --border: #3D3335;
+    --cta-fg: #191416;
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #191416;
+  --bg-alt: #211C1E;
+  --gold: #D4B576;
+  --gold-hover: #E0C48A;
+  --blush: #2A2025;
+  --ink: #EDE6E4;
+  --ink-mid: #B5A8AA;
+  --mute: #8F8385;
+  --border: #3D3335;
+  --cta-fg: #191416;
+  color-scheme: dark;
+}
+
+body {
+  background: var(--bg);
+  color: var(--ink);
+  font-family: var(--font-body);
+  font-size: 16px;
+  line-height: 1.6;
+  margin: 0;
+  -webkit-font-smoothing: antialiased;
+}
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0 0 auto;
+  height: env(safe-area-inset-top, 0px);
+  z-index: 20;
+  background: var(--bg);
+}
+
+*, *::before, *::after { box-sizing: border-box; }
+
+#page[data-lang="da"] [lang="en"],
+#page[data-lang="da"] [lang="uk"],
+#page[data-lang="en"] [lang="da"],
+#page[data-lang="en"] [lang="uk"],
+#page[data-lang="uk"] [lang="da"],
+#page[data-lang="uk"] [lang="en"] { display: none; }
+
+.container {
+  max-width: 720px;
+  margin: 0 auto;
+  padding-left: max(16px, env(safe-area-inset-left, 0px));
+  padding-right: max(16px, env(safe-area-inset-right, 0px));
+}
+
+/* ── Header ── */
+.header {
+  position: sticky;
+  top: env(safe-area-inset-top, 0px);
+  z-index: 10;
+  background: var(--bg);
+  border-bottom: 1px solid var(--border);
+}
+.header-inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-block: 14px;
+}
+.header-logo {
+  font-family: var(--font-display);
+  font-size: 22px;
+  font-weight: 500;
+  color: var(--ink);
+  text-decoration: none;
+}
+.lang-toggle {
+  display: flex;
+  gap: 2px;
+  background: var(--bg-alt);
+  border-radius: 6px;
+  padding: 2px;
+}
+.lang-btn {
+  font-family: var(--font-body);
+  font-size: 13px;
+  font-weight: 500;
+  padding: 5px 10px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  background: transparent;
+  color: var(--mute);
+  transition: background 0.15s, color 0.15s;
+}
+.lang-btn:focus-visible { outline: 2px solid var(--gold); outline-offset: 1px; }
+.lang-btn.active {
+  background: var(--bg);
+  color: var(--ink);
+  box-shadow: 0 1px 3px rgba(0,0,0,0.06);
+}
+
+/* ── Page intro ── */
+.intro {
+  padding-block: 48px 12px;
+}
+.intro h1 {
+  font-family: var(--font-display);
+  font-size: clamp(28px, 4vw, 38px);
+  font-weight: 500;
+  margin: 0 0 8px;
+  line-height: 1.2;
+  text-wrap: balance;
+}
+.intro-sub {
+  color: var(--ink-mid);
+  font-size: 16px;
+  margin: 0;
+}
+
+/* ── Category tabs ── */
+.tabs {
+  display: flex;
+  gap: 8px;
+  padding-block: 24px 32px;
+  flex-wrap: wrap;
+}
+.tab {
+  font-family: var(--font-body);
+  font-size: 14px;
+  font-weight: 500;
+  padding: 10px 20px;
+  border: 1.5px solid var(--border);
+  border-radius: 6px;
+  cursor: pointer;
+  background: var(--bg);
+  color: var(--ink-mid);
+  transition: border-color 0.15s, background 0.15s, color 0.15s;
+}
+.tab:focus-visible { outline: 2px solid var(--gold); outline-offset: 2px; }
+.tab[aria-pressed="true"] {
+  border-color: var(--gold);
+  background: var(--blush);
+  color: var(--ink);
+}
+.tab .tab-count {
+  font-size: 12px;
+  color: var(--mute);
+  margin-left: 4px;
+}
+.tab[aria-pressed="true"] .tab-count { color: var(--ink-mid); }
+
+/* ── Service list ── */
+.category { display: none; }
+.category.active { display: block; }
+
+.service-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding-bottom: 32px;
+}
+
+.service-link {
+  display: grid;
+  grid-template-columns: 1fr auto auto;
+  align-items: center;
+  gap: 16px;
+  padding: 18px 20px;
+  border: 1px solid var(--border);
+  border-left: 3px solid var(--gold);
+  border-radius: 6px;
+  text-decoration: none;
+  color: inherit;
+  background: var(--bg);
+  transition: border-color 0.15s, box-shadow 0.15s;
+}
+.service-link:hover {
+  border-color: var(--gold);
+  box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+}
+.service-link:focus-visible {
+  outline: 2px solid var(--gold);
+  outline-offset: 2px;
+}
+
+.service-name {
+  min-width: 0;
+}
+.service-name b {
+  display: block;
+  font-family: var(--font-display);
+  font-size: 18px;
+  font-weight: 600;
+  line-height: 1.25;
+  margin-bottom: 2px;
+}
+.service-name small {
+  display: block;
+  font-size: 13px;
+  color: var(--mute);
+}
+
+.service-price {
+  text-align: right;
+  white-space: nowrap;
+}
+.service-price b {
+  display: block;
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--ink);
+}
+.service-price small {
+  display: block;
+  font-size: 12px;
+  color: var(--mute);
+}
+
+.book-badge {
+  font-family: var(--font-body);
+  font-size: 13px;
+  font-weight: 600;
+  padding: 8px 16px;
+  background: var(--gold);
+  color: var(--cta-fg);
+  border-radius: 5px;
+  white-space: nowrap;
+}
+
+/* ── Add-ons note ── */
+.addons-note {
+  padding: 16px 20px;
+  border: 1px dashed var(--gold);
+  border-radius: 6px;
+  font-size: 14px;
+  color: var(--ink-mid);
+  line-height: 1.5;
+  margin-top: 4px;
+}
+.addons-note b { color: var(--ink); }
+
+/* ── Footer ── */
+.page-footer {
+  padding-block: 24px;
+  text-align: center;
+  font-size: 13px;
+  color: var(--mute);
+  border-top: 1px solid var(--border);
+  margin-top: 16px;
+}
+.page-footer a {
+  color: var(--ink-mid);
+  text-decoration: none;
+  border-bottom: 1px solid var(--border);
+}
+.page-footer a:hover { border-color: var(--gold); }
+
+/* ── Responsive ── */
+@media (max-width: 600px) {
+  .service-link {
+    grid-template-columns: 1fr auto;
+    gap: 12px;
+  }
+  .book-badge { display: none; }
+  .service-link::after {
+    content: "";
+    display: none;
+  }
+  .intro { padding-block: 32px 8px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { transition-duration: 0.01ms !important; }
+}
+</style>
+
+<div id="page" data-lang="da">
+
+<header class="header">
+  <div class="container header-inner">
+    <span class="header-logo">Zelenska Studio</span>
+    <div class="lang-toggle" role="radiogroup" aria-label="Language">
+      <button class="lang-btn active" data-set-lang="da" role="radio" aria-checked="true">DA</button>
+      <button class="lang-btn" data-set-lang="en" role="radio" aria-checked="false">EN</button>
+      <button class="lang-btn" data-set-lang="uk" role="radio" aria-checked="false">UA</button>
+    </div>
+  </div>
+</header>
+
+<main>
+  <div class="container">
+
+    <div class="intro">
+      <h1 lang="da">Book tid online</h1>
+      <h1 lang="en">Book online</h1>
+      <h1 lang="uk">Запис онлайн</h1>
+      <p class="intro-sub" lang="da">Vælg kategori og behandling nedenfor</p>
+      <p class="intro-sub" lang="en">Choose a category and service below</p>
+      <p class="intro-sub" lang="uk">Оберіть категорію та послугу нижче</p>
+    </div>
+
+    <!-- Category tabs -->
+    <div class="tabs" role="tablist">
+      <button class="tab" role="tab" aria-pressed="true" data-cat="manicure">
+        <span lang="da">Manicure</span>
+        <span lang="en">Manicure</span>
+        <span lang="uk">Манікюр</span>
+        <span class="tab-count">(5)</span>
+      </button>
+      <button class="tab" role="tab" aria-pressed="false" data-cat="pedicure">
+        <span lang="da">Pedicure</span>
+        <span lang="en">Pedicure</span>
+        <span lang="uk">Педикюр</span>
+        <span class="tab-count">(4)</span>
+      </button>
+      <button class="tab" role="tab" aria-pressed="false" data-cat="foot">
+        <span lang="da">Fodbehandling</span>
+        <span lang="en">Foot treatment</span>
+        <span lang="uk">Подологія</span>
+        <span class="tab-count">(6)</span>
+      </button>
+    </div>
+
+    <!-- Manicure -->
+    <div class="category active" id="manicure">
+      <div class="service-list">
+
+        <a class="service-link" href="https://cal.com/zelenska-studio/klassisk-manicure" target="_blank" rel="noopener">
+          <div class="service-name">
+            <b lang="da">Klassisk manicure</b>
+            <b lang="en">Classic manicure</b>
+            <b lang="uk">Класичний манікюр</b>
+            <small>30 min</small>
+          </div>
+          <div class="service-price"><b>300 kr.</b></div>
+          <span class="book-badge" lang="da">Book</span>
+          <span class="book-badge" lang="en">Book</span>
+          <span class="book-badge" lang="uk">Запис</span>
+        </a>
+
+        <a class="service-link" href="https://cal.com/zelenska-studio/kompleks-manicure-gel" target="_blank" rel="noopener">
+          <div class="service-name">
+            <b lang="da">Kompleks manicure med gel</b>
+            <b lang="en">Complex manicure with gel polish</b>
+            <b lang="uk">Комплексний манікюр з гель-лаком</b>
+            <small>60 min</small>
+          </div>
+          <div class="service-price"><b>350 kr.</b></div>
+          <span class="book-badge" lang="da">Book</span>
+          <span class="book-badge" lang="en">Book</span>
+          <span class="book-badge" lang="uk">Запис</span>
+        </a>
+
+        <a class="service-link" href="https://cal.com/zelenska-studio/kompleks-manicure-styrkende-s" target="_blank" rel="noopener">
+          <div class="service-name">
+            <b lang="da">Kompleks manicure med styrkelse (S)</b>
+            <b lang="en">Complex manicure with strengthening (S)</b>
+            <b lang="uk">Комплексний манікюр зі зміцненням (S)</b>
+            <small>120 min</small>
+          </div>
+          <div class="service-price"><b>400 kr.</b></div>
+          <span class="book-badge" lang="da">Book</span>
+          <span class="book-badge" lang="en">Book</span>
+          <span class="book-badge" lang="uk">Запис</span>
+        </a>
+
+        <a class="service-link" href="https://cal.com/zelenska-studio/kompleks-manicure-styrkende-m-l" target="_blank" rel="noopener">
+          <div class="service-name">
+            <b lang="da">Kompleks manicure med styrkelse (M, L)</b>
+            <b lang="en">Complex manicure with strengthening (M, L)</b>
+            <b lang="uk">Комплексний манікюр зі зміцненням (M, L)</b>
+            <small>120 min</small>
+          </div>
+          <div class="service-price"><b>450 kr.</b></div>
+          <span class="book-badge" lang="da">Book</span>
+          <span class="book-badge" lang="en">Book</span>
+          <span class="book-badge" lang="uk">Запис</span>
+        </a>
+
+        <a class="service-link" href="https://cal.com/zelenska-studio/negleforlaengelse" target="_blank" rel="noopener">
+          <div class="service-name">
+            <b lang="da">Negleforlængelse</b>
+            <b lang="en">Nail extension</b>
+            <b lang="uk">Нарощування нігтів</b>
+            <small>150 min</small>
+          </div>
+          <div class="service-price"><b>fra 450 kr.</b></div>
+          <span class="book-badge" lang="da">Book</span>
+          <span class="book-badge" lang="en">Book</span>
+          <span class="book-badge" lang="uk">Запис</span>
+        </a>
+
+      </div>
+
+      <div class="addons-note">
+        <b lang="da">Tilvalg (+50 kr.):</b>
+        <b lang="en">Add-ons (+50 kr.):</b>
+        <b lang="uk">Додатково (+50 kr.):</b>
+        <span lang="da">Fransk design, Ombre / Babyboomer, Fjernelse af gel, Reparation af negl. Vælges i bookingformularen.</span>
+        <span lang="en">French design, Ombre / Babyboomer, Gel removal, Nail repair. Choose in the booking form.</span>
+        <span lang="uk">Французький дизайн, Омбре / Бебі-бумер, Зняття гелю, Ремонт нігтя. Обирається у формі запису.</span>
+      </div>
+    </div>
+
+    <!-- Pedicure -->
+    <div class="category" id="pedicure">
+      <div class="service-list">
+
+        <a class="service-link" href="https://cal.com/zelenska-studio/fuld-pedicure-gel" target="_blank" rel="noopener">
+          <div class="service-name">
+            <b lang="da">Fuld pedicure med gel og fodpleje</b>
+            <b lang="en">Full pedicure with gel polish &amp; foot care</b>
+            <b lang="uk">Повний педикюр з гель-лаком та доглядом за стопами</b>
+            <small>120 min</small>
+          </div>
+          <div class="service-price"><b>450 kr.</b></div>
+          <span class="book-badge" lang="da">Book</span>
+          <span class="book-badge" lang="en">Book</span>
+          <span class="book-badge" lang="uk">Запис</span>
+        </a>
+
+        <a class="service-link" href="https://cal.com/zelenska-studio/pedicure-fodpleje" target="_blank" rel="noopener">
+          <div class="service-name">
+            <b lang="da">Pedicure (tæer + fodpleje)</b>
+            <b lang="en">Pedicure (toes + foot care)</b>
+            <b lang="uk">Педикюр (пальці + догляд за стопами)</b>
+            <small>60 min</small>
+          </div>
+          <div class="service-price"><b>400 kr.</b></div>
+          <span class="book-badge" lang="da">Book</span>
+          <span class="book-badge" lang="en">Book</span>
+          <span class="book-badge" lang="uk">Запис</span>
+        </a>
+
+        <a class="service-link" href="https://cal.com/zelenska-studio/pedicure-gel" target="_blank" rel="noopener">
+          <div class="service-name">
+            <b lang="da">Pedicure med gel</b>
+            <b lang="en">Pedicure with gel polish</b>
+            <b lang="uk">Педикюр з гель-лаком</b>
+            <small>120 min</small>
+          </div>
+          <div class="service-price"><b>400 kr.</b></div>
+          <span class="book-badge" lang="da">Book</span>
+          <span class="book-badge" lang="en">Book</span>
+          <span class="book-badge" lang="uk">Запис</span>
+        </a>
+
+        <a class="service-link" href="https://cal.com/zelenska-studio/klassisk-pedicure" target="_blank" rel="noopener">
+          <div class="service-name">
+            <b lang="da">Klassisk pedicure (uden lak)</b>
+            <b lang="en">Classic pedicure (no polish)</b>
+            <b lang="uk">Класичний педикюр (без покриття)</b>
+            <small>30 min</small>
+          </div>
+          <div class="service-price"><b>300 kr.</b></div>
+          <span class="book-badge" lang="da">Book</span>
+          <span class="book-badge" lang="en">Book</span>
+          <span class="book-badge" lang="uk">Запис</span>
+        </a>
+
+      </div>
+    </div>
+
+    <!-- Foot treatment -->
+    <div class="category" id="foot">
+      <div class="service-list">
+
+        <a class="service-link" href="https://cal.com/zelenska-studio/fodpleje" target="_blank" rel="noopener">
+          <div class="service-name">
+            <b lang="da">Fodpleje</b>
+            <b lang="en">Foot care treatment</b>
+            <b lang="uk">Догляд за стопами</b>
+            <small>30 min</small>
+          </div>
+          <div class="service-price"><b>300 kr.</b></div>
+          <span class="book-badge" lang="da">Book</span>
+          <span class="book-badge" lang="en">Book</span>
+          <span class="book-badge" lang="uk">Запис</span>
+        </a>
+
+        <a class="service-link" href="https://cal.com/zelenska-studio/indgroet-negl" target="_blank" rel="noopener">
+          <div class="service-name">
+            <b lang="da">Behandling af indgroet negl</b>
+            <b lang="en">Ingrown toenail care</b>
+            <b lang="uk">Лікування врослого нігтя</b>
+            <small>60 min</small>
+          </div>
+          <div class="service-price"><b>fra 200 kr.</b></div>
+          <span class="book-badge" lang="da">Book</span>
+          <span class="book-badge" lang="en">Book</span>
+          <span class="book-badge" lang="uk">Запис</span>
+        </a>
+
+        <a class="service-link" href="https://cal.com/zelenska-studio/plantar-vorte" target="_blank" rel="noopener">
+          <div class="service-name">
+            <b lang="da">Behandling af vorte under foden</b>
+            <b lang="en">Plantar wart care</b>
+            <b lang="uk">Видалення підошовної бородавки</b>
+            <small>30 min</small>
+          </div>
+          <div class="service-price"><b>350 kr.</b></div>
+          <span class="book-badge" lang="da">Book</span>
+          <span class="book-badge" lang="en">Book</span>
+          <span class="book-badge" lang="uk">Запис</span>
+        </a>
+
+        <a class="service-link" href="https://cal.com/zelenska-studio/haard-hud-fjernelse" target="_blank" rel="noopener">
+          <div class="service-name">
+            <b lang="da">Fjernelse af hård hud</b>
+            <b lang="en">Core callus removal</b>
+            <b lang="uk">Видалення натоптишів</b>
+            <small>60 min</small>
+          </div>
+          <div class="service-price"><b>350 kr.</b></div>
+          <span class="book-badge" lang="da">Book</span>
+          <span class="book-badge" lang="en">Book</span>
+          <span class="book-badge" lang="uk">Запис</span>
+        </a>
+
+        <a class="service-link" href="https://cal.com/zelenska-studio/svampe-negl" target="_blank" rel="noopener">
+          <div class="service-name">
+            <b lang="da">Behandling af neglesvamp</b>
+            <b lang="en">Fungal nail care</b>
+            <b lang="uk">Лікування грибка нігтів</b>
+            <small>60 min</small>
+          </div>
+          <div class="service-price"><b>450 kr.</b></div>
+          <span class="book-badge" lang="da">Book</span>
+          <span class="book-badge" lang="en">Book</span>
+          <span class="book-badge" lang="uk">Запис</span>
+        </a>
+
+        <a class="service-link" href="https://cal.com/zelenska-studio/onykolyse" target="_blank" rel="noopener">
+          <div class="service-name">
+            <b lang="da">Behandling af onykolyse</b>
+            <b lang="en">Onycholysis care</b>
+            <b lang="uk">Лікування оніхолізису</b>
+            <small>60 min</small>
+          </div>
+          <div class="service-price"><b>100 kr.</b></div>
+          <span class="book-badge" lang="da">Book</span>
+          <span class="book-badge" lang="en">Book</span>
+          <span class="book-badge" lang="uk">Запис</span>
+        </a>
+
+      </div>
+    </div>
+
+  </div>
+</main>
+
+<footer class="page-footer">
+  <div class="container">
+    <a href="https://www.google.com/maps/place/Elmeg%C3%A5rden+9,+7620+N%C3%B8rre+Nissum" target="_blank" rel="noopener">Elmegården 9, 7620 Lemvig</a>
+  </div>
+</footer>
+
+</div>
+
+<script>
+(function() {
+  var langBtns = document.querySelectorAll('.lang-btn');
+  langBtns.forEach(function(btn) {
+    btn.addEventListener('click', function() {
+      var lang = this.getAttribute('data-set-lang');
+      document.getElementById('page').setAttribute('data-lang', lang);
+      langBtns.forEach(function(b) {
+        var active = b.getAttribute('data-set-lang') === lang;
+        b.classList.toggle('active', active);
+        b.setAttribute('aria-checked', active ? 'true' : 'false');
+      });
+    });
+  });
+
+  var tabs = document.querySelectorAll('.tab');
+  tabs.forEach(function(tab) {
+    tab.addEventListener('click', function() {
+      var cat = this.getAttribute('data-cat');
+      tabs.forEach(function(t) { t.setAttribute('aria-pressed', t.getAttribute('data-cat') === cat ? 'true' : 'false'); });
+      document.querySelectorAll('.category').forEach(function(c) { c.classList.toggle('active', c.id === cat); });
+    });
+  });
+})();
+</script>

@@ -1,0 +1,935 @@
+<title>Zelenska Studio</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=DM+Sans:wght@400;500;600&display=swap">
+
+<style>
+/* Single-column editorial, left-aligned. White + antique gold + blush. */
+:root {
+  --bg: #ffffff;
+  --bg-alt: #faf7f3;
+  --gold: #BFA265;
+  --gold-hover: #A8894F;
+  --gold-faint: #F0E8D5;
+  --blush: #f5eded;
+  --ink: #2D2226;
+  --ink-mid: #5A4D50;
+  --mute: #897D7F;
+  --border: #E6DDD5;
+  --cta-fg: #2D2226;
+  --font-display: 'Cormorant Garamond', Georgia, 'Times New Roman', serif;
+  --font-body: 'DM Sans', 'Helvetica Neue', Arial, sans-serif;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #191416;
+    --bg-alt: #211C1E;
+    --gold: #D4B576;
+    --gold-hover: #E0C48A;
+    --gold-faint: #2C2520;
+    --blush: #2A2025;
+    --ink: #EDE6E4;
+    --ink-mid: #B5A8AA;
+    --mute: #8F8385;
+    --border: #3D3335;
+    --cta-fg: #191416;
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #191416;
+  --bg-alt: #211C1E;
+  --gold: #D4B576;
+  --gold-hover: #E0C48A;
+  --gold-faint: #2C2520;
+  --blush: #2A2025;
+  --ink: #EDE6E4;
+  --ink-mid: #B5A8AA;
+  --mute: #8F8385;
+  --border: #3D3335;
+  --cta-fg: #191416;
+  color-scheme: dark;
+}
+
+body {
+  background: var(--bg);
+  color: var(--ink);
+  font-family: var(--font-body);
+  font-size: 16px;
+  line-height: 1.6;
+  margin: 0;
+  -webkit-font-smoothing: antialiased;
+}
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0 0 auto;
+  height: env(safe-area-inset-top, 0px);
+  z-index: 20;
+  background: var(--bg);
+}
+
+*, *::before, *::after { box-sizing: border-box; }
+img { max-width: 100%; }
+blockquote { margin: 0; }
+
+/* Trilingual toggle — hide non-active languages */
+#page[data-lang="da"] [lang="en"],
+#page[data-lang="da"] [lang="uk"],
+#page[data-lang="en"] [lang="da"],
+#page[data-lang="en"] [lang="uk"],
+#page[data-lang="uk"] [lang="da"],
+#page[data-lang="uk"] [lang="en"] { display: none; }
+
+.container {
+  max-width: 920px;
+  margin: 0 auto;
+  padding-left: max(16px, env(safe-area-inset-left, 0px));
+  padding-right: max(16px, env(safe-area-inset-right, 0px));
+}
+
+/* ── Nav ── */
+.nav {
+  position: sticky;
+  top: env(safe-area-inset-top, 0px);
+  z-index: 10;
+  background: var(--bg);
+  border-bottom: 1px solid var(--border);
+}
+.nav-inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-block: 14px;
+}
+.nav-logo {
+  font-family: var(--font-display);
+  font-size: 22px;
+  font-weight: 500;
+  letter-spacing: 0.01em;
+  color: var(--ink);
+}
+.lang-toggle {
+  display: flex;
+  gap: 2px;
+  background: var(--bg-alt);
+  border-radius: 6px;
+  padding: 2px;
+}
+.lang-btn {
+  font-family: var(--font-body);
+  font-size: 13px;
+  font-weight: 500;
+  padding: 5px 10px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  background: transparent;
+  color: var(--mute);
+  transition: background 0.15s, color 0.15s;
+}
+.lang-btn:focus-visible {
+  outline: 2px solid var(--gold);
+  outline-offset: 1px;
+}
+.lang-btn.active {
+  background: var(--bg);
+  color: var(--ink);
+  box-shadow: 0 1px 3px rgba(0,0,0,0.06);
+}
+
+/* ── Hero ── */
+.hero-section {
+  position: relative;
+  overflow: hidden;
+  padding-block: 80px 64px;
+}
+.hero-section::before {
+  content: "Z";
+  position: absolute;
+  right: -2%;
+  top: 50%;
+  transform: translateY(-50%);
+  font-family: var(--font-display);
+  font-size: clamp(200px, 30vw, 420px);
+  font-weight: 600;
+  color: var(--gold);
+  opacity: 0.06;
+  pointer-events: none;
+  line-height: 1;
+  user-select: none;
+}
+.hero-section h1 {
+  font-family: var(--font-display);
+  font-size: clamp(30px, 5vw, 46px);
+  font-weight: 500;
+  line-height: 1.18;
+  margin: 0 0 24px;
+  max-width: 640px;
+  text-wrap: balance;
+  position: relative;
+}
+.hero-sub {
+  font-size: 17px;
+  line-height: 1.6;
+  color: var(--ink-mid);
+  max-width: 540px;
+  margin: 0 0 36px;
+  position: relative;
+}
+.cta {
+  display: inline-block;
+  font-family: var(--font-body);
+  font-size: 15px;
+  font-weight: 600;
+  padding: 14px 32px;
+  background: var(--gold);
+  color: var(--cta-fg);
+  text-decoration: none;
+  border-radius: 6px;
+  transition: background 0.15s;
+  border: none;
+  cursor: pointer;
+  position: relative;
+}
+.cta:hover { background: var(--gold-hover); }
+.cta:focus-visible { outline: 2px solid var(--gold); outline-offset: 3px; }
+
+/* ── Gold divider ── */
+.gold-rule {
+  border: none;
+  height: 1px;
+  background: var(--gold);
+  opacity: 0.3;
+  margin: 0;
+}
+
+/* ── Trust ── */
+.trust-section {
+  background: var(--bg-alt);
+  padding-block: 56px;
+}
+.trust-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 32px;
+}
+.trust-item {
+  border-top: 2px solid var(--gold);
+  padding-top: 18px;
+}
+.trust-item h3 {
+  font-family: var(--font-display);
+  font-size: 20px;
+  font-weight: 600;
+  margin: 0 0 8px;
+  line-height: 1.25;
+}
+.trust-item p {
+  font-size: 14.5px;
+  color: var(--ink-mid);
+  margin: 0;
+  line-height: 1.55;
+}
+
+/* ── Services ── */
+.services-section { padding-block: 64px; }
+.section-heading {
+  font-family: var(--font-display);
+  font-size: clamp(26px, 4vw, 34px);
+  font-weight: 500;
+  margin: 0 0 40px;
+  text-wrap: balance;
+  line-height: 1.2;
+}
+.service-cards {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
+}
+.service-card {
+  border-left: 2px solid var(--gold);
+  padding-left: 20px;
+  min-width: 0;
+}
+.service-card h3 {
+  font-family: var(--font-display);
+  font-size: 21px;
+  font-weight: 600;
+  margin: 0 0 12px;
+  line-height: 1.25;
+}
+.service-pain {
+  font-size: 14px;
+  font-style: italic;
+  color: var(--mute);
+  margin: 0 0 10px;
+  line-height: 1.5;
+}
+.service-result {
+  font-size: 14.5px;
+  color: var(--ink-mid);
+  margin: 0 0 16px;
+  line-height: 1.55;
+}
+.service-meta {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--ink);
+  margin: 0;
+}
+
+/* ── About ── */
+.about-section {
+  background: var(--bg-alt);
+  padding-block: 64px;
+}
+.about-layout {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 48px;
+  align-items: start;
+}
+.about-name-block {
+  position: relative;
+}
+.about-name {
+  font-family: var(--font-display);
+  font-size: clamp(40px, 6vw, 56px);
+  font-weight: 400;
+  font-style: italic;
+  color: var(--gold);
+  line-height: 1.05;
+  margin: 0;
+}
+.about-role {
+  display: block;
+  font-family: var(--font-body);
+  font-size: 13px;
+  font-style: normal;
+  font-weight: 500;
+  color: var(--mute);
+  margin-top: 10px;
+}
+.about-text p {
+  font-size: 16px;
+  line-height: 1.65;
+  color: var(--ink-mid);
+  margin: 0 0 14px;
+  max-width: 520px;
+}
+.about-text p:last-child { margin-bottom: 0; }
+
+/* ── Testimonials ── */
+.testimonials-section { padding-block: 64px; }
+.testimonials-list {
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
+}
+.testimonial { max-width: 580px; }
+.testimonial-quote {
+  font-family: var(--font-display);
+  font-size: 19px;
+  font-style: italic;
+  font-weight: 400;
+  line-height: 1.5;
+  margin: 0 0 10px;
+  color: var(--ink);
+}
+.testimonial-mark {
+  display: block;
+  font-family: var(--font-display);
+  font-size: 52px;
+  line-height: 0.5;
+  color: var(--gold);
+  margin-bottom: 10px;
+  font-style: normal;
+  user-select: none;
+}
+.testimonial-author {
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--mute);
+  margin: 0;
+}
+.testimonial-stars {
+  color: var(--gold);
+  font-size: 12px;
+  letter-spacing: 1px;
+  margin-left: 4px;
+}
+
+/* ── Booking ── */
+.booking-section {
+  background: var(--blush);
+  padding-block: 80px;
+  text-align: center;
+}
+.booking-section .section-heading {
+  max-width: 480px;
+  margin-left: auto;
+  margin-right: auto;
+}
+.booking-sub {
+  font-size: 16px;
+  color: var(--ink-mid);
+  max-width: 460px;
+  margin: 0 auto 32px;
+  line-height: 1.6;
+}
+.booking-section .cta {
+  font-size: 16px;
+  padding: 16px 36px;
+}
+.contact-grid {
+  margin-top: 48px;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 28px 36px;
+  font-size: 14px;
+}
+.contact-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 3px;
+}
+.contact-label {
+  font-weight: 500;
+  font-size: 12px;
+  color: var(--mute);
+}
+.contact-value {
+  color: var(--ink);
+  font-size: 15px;
+}
+.contact-value a {
+  color: var(--ink);
+  text-decoration: none;
+  border-bottom: 1px solid var(--border);
+  transition: border-color 0.15s;
+}
+.contact-value a:hover { border-color: var(--gold); }
+.contact-value a:focus-visible { outline: 2px solid var(--gold); outline-offset: 2px; }
+
+/* ── Footer ── */
+.site-footer {
+  padding-block: 28px;
+  text-align: center;
+  font-size: 13px;
+  color: var(--mute);
+  border-top: 1px solid var(--border);
+}
+.site-footer .container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+}
+.footer-name {
+  font-family: var(--font-display);
+  font-size: 16px;
+  font-weight: 500;
+  color: var(--ink);
+}
+
+/* ── Your Visit (steps) ── */
+.visit-section { padding-block: 64px; }
+.visit-steps {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 24px;
+  counter-reset: step;
+}
+.visit-step { text-align: center; }
+.visit-step::before {
+  counter-increment: step;
+  content: counter(step);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  border: 2px solid var(--gold);
+  font-family: var(--font-display);
+  font-size: 20px;
+  font-weight: 600;
+  color: var(--gold);
+  margin-bottom: 14px;
+}
+.visit-step h3 {
+  font-family: var(--font-display);
+  font-size: 18px;
+  font-weight: 600;
+  margin: 0 0 6px;
+  line-height: 1.25;
+}
+.visit-step p {
+  font-size: 14px;
+  color: var(--ink-mid);
+  margin: 0;
+  line-height: 1.5;
+}
+
+/* ── FAQ ── */
+.faq-section {
+  background: var(--bg-alt);
+  padding-block: 64px;
+}
+.faq-list {
+  display: flex;
+  flex-direction: column;
+  max-width: 640px;
+}
+.faq-item {
+  border-bottom: 1px solid var(--border);
+}
+.faq-item:first-child { border-top: 1px solid var(--border); }
+.faq-item summary {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 18px 0;
+  cursor: pointer;
+  font-family: var(--font-display);
+  font-size: 18px;
+  font-weight: 500;
+  line-height: 1.3;
+  list-style: none;
+  color: var(--ink);
+}
+.faq-item summary::-webkit-details-marker { display: none; }
+.faq-item summary::after {
+  content: "+";
+  flex-shrink: 0;
+  font-family: var(--font-body);
+  font-size: 22px;
+  font-weight: 400;
+  color: var(--gold);
+  transition: transform 0.15s;
+}
+.faq-item[open] summary::after { content: "\2212"; }
+.faq-item summary:focus-visible { outline: 2px solid var(--gold); outline-offset: 2px; }
+.faq-answer {
+  padding: 0 0 18px;
+  font-size: 15px;
+  color: var(--ink-mid);
+  line-height: 1.6;
+  max-width: 560px;
+}
+
+/* ── Responsive ── */
+@media (max-width: 768px) {
+  .hero-section { padding-block: 48px 40px; }
+  .trust-grid { grid-template-columns: 1fr; gap: 24px; }
+  .service-cards { grid-template-columns: 1fr; gap: 20px; }
+  .about-layout { grid-template-columns: 1fr; gap: 20px; }
+  .contact-grid { flex-direction: column; align-items: center; gap: 18px; }
+  .trust-section,
+  .services-section,
+  .about-section,
+  .visit-section,
+  .testimonials-section,
+  .faq-section { padding-block: 48px; }
+  .visit-steps { grid-template-columns: repeat(2, 1fr); gap: 20px; }
+  .booking-section { padding-block: 56px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { transition-duration: 0.01ms !important; }
+}
+</style>
+
+<div id="page" data-lang="da">
+
+<!-- Nav -->
+<nav class="nav" aria-label="Main">
+  <div class="container nav-inner">
+    <span class="nav-logo">Zelenska Studio</span>
+    <div class="lang-toggle" role="radiogroup" aria-label="Language">
+      <button class="lang-btn active" data-set-lang="da" role="radio" aria-checked="true">DA</button>
+      <button class="lang-btn" data-set-lang="en" role="radio" aria-checked="false">EN</button>
+      <button class="lang-btn" data-set-lang="uk" role="radio" aria-checked="false">UA</button>
+    </div>
+  </div>
+</nav>
+
+<!-- Hero -->
+<section class="hero-section">
+  <div class="container">
+    <h1 lang="da">Bange for snavsede redskaber, smertefulde neglebånd eller uventede tillæg?</h1>
+    <h1 lang="en">Afraid of dirty tools, painful cuticles, or surprise bills?</h1>
+    <h1 lang="uk">Боїтеся брудних інструментів, болючих кутикул чи несподіваних доплат?</h1>
+    <p class="hero-sub" lang="da">Op til 5 ugers holdbarhed med 3-trins steriliserede instrumenter, skånsom e-file neglebåndspleje og gennemskuelige faste priser.</p>
+    <p class="hero-sub" lang="en">Up to 5 weeks of chip-free wear with 3-stage sterilized instruments, gentle e-file cuticle care, and transparent flat-rate pricing.</p>
+    <p class="hero-sub" lang="uk">До 5 тижнів носіння з 3-етапною стерилізацією інструментів, делікатним апаратним доглядом за кутикулою та прозорими фіксованими цінами.</p>
+    <a class="cta" href="https://claude.ai/artifact/RHwBc5kHw8zLRT57wjbRCk" target="_blank" rel="noopener">
+      <span lang="da">Book Din Tid</span>
+      <span lang="en">Book Your Appointment</span>
+      <span lang="uk">Записатися на прийом</span>
+    </a>
+  </div>
+</section>
+
+<hr class="gold-rule">
+
+<!-- Trust -->
+<section class="trust-section">
+  <div class="container">
+    <div class="trust-grid">
+      <div class="trust-item">
+        <h3 lang="da">3-Trins Sterilisering</h3>
+        <h3 lang="en">3-Stage Sterilization</h3>
+        <h3 lang="uk">3-Етапна Стерилізація</h3>
+        <p lang="da">Alle metalredskaber gennemgår kemisk desinfektion, ultralydskavitation og autoklavering, åbnet foran dig. File og buffere er 100% til engangsbrug.</p>
+        <p lang="en">Every metal instrument goes through chemical disinfection, ultrasonic cleaning, and autoclaving, opened in front of you. Files and buffers are 100% single-use.</p>
+        <p lang="uk">Кожен металевий інструмент проходить хімічну дезінфекцію, ультразвукове очищення та автоклавування — розпечатується при вас. Пилки та бафи 100% одноразові.</p>
+      </div>
+      <div class="trust-item">
+        <h3 lang="da">Skånsom E-File Teknik</h3>
+        <h3 lang="en">Gentle E-File Technique</h3>
+        <h3 lang="uk">Делікатна Апаратна Техніка</h3>
+        <p lang="da">Kontrolleret tør neglebåndspleje uden klipning, blødning eller udtynding af din naturnegl.</p>
+        <p lang="en">Controlled dry cuticle care without clipping, bleeding, or thinning your natural nail plate.</p>
+        <p lang="uk">Контрольований сухий догляд за кутикулою без обрізання, кровотечі та стоншення натуральної нігтьової пластини.</p>
+      </div>
+      <div class="trust-item">
+        <h3 lang="da">Fast Pris, Ingen Overraskelser</h3>
+        <h3 lang="en">Flat Pricing, No Surprises</h3>
+        <h3 lang="uk">Фіксована Ціна, Без Сюрпризів</h3>
+        <p lang="da">Alle priser inkluderer forberedelse, neglebåndspleje og fjernelse af tidligere arbejde. Ingen tillæg ved kassen.</p>
+        <p lang="en">Every price includes prep, cuticle care, and removal of prior work. No add-ons at checkout.</p>
+        <p lang="uk">Усі ціни включають підготовку, обробку кутикули та зняття попередньої роботи. Жодних доплат на касі.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Services -->
+<section class="services-section">
+  <div class="container">
+    <h2 class="section-heading" lang="da">Behandlinger</h2>
+    <h2 class="section-heading" lang="en">Services</h2>
+    <h2 class="section-heading" lang="uk">Послуги</h2>
+    <div class="service-cards">
+
+      <div class="service-card">
+        <h3 lang="da">Tør E-File Gelmanicure</h3>
+        <h3 lang="en">Dry E-File Gel Manicure</h3>
+        <h3 lang="uk">Сухий Апаратний Гель-Манікюр</h3>
+        <p class="service-pain" lang="da">Mange oplever smertefuld klipning af neglebånd og ømme fingerspidser efter besøg hos en negleklinik.</p>
+        <p class="service-pain" lang="en">Many experience painful cuticle clipping and sore fingertips after a salon visit.</p>
+        <p class="service-pain" lang="uk">Багато хто стикається з болючим обрізанням кутикули та болем у кінчиках пальців після візиту до салону.</p>
+        <p class="service-result" lang="da">Skånsom e-file teknik giver en skarp neglebåndskant og 3–5 ugers holdbarhed uden ubehag.</p>
+        <p class="service-result" lang="en">Gentle e-file technique for a crisp cuticle line and 3–5 weeks of chip-free wear without discomfort.</p>
+        <p class="service-result" lang="uk">Делікатна апаратна техніка для ідеальної лінії кутикули та 3–5 тижнів носіння без дискомфорту.</p>
+        <p class="service-meta">fra 300 kr. / 30–75 min</p>
+      </div>
+
+      <div class="service-card">
+        <h3 lang="da">Struktureret Builder-overlæg</h3>
+        <h3 lang="en">Structured Builder Overlay</h3>
+        <h3 lang="uk">Структурне Зміцнення Нігтів</h3>
+        <p class="service-pain" lang="da">Tykke, klodsede negle der knækker for nemt og skader din naturnegl.</p>
+        <p class="service-pain" lang="en">Thick, bulky nails that break too easily and damage your natural nail.</p>
+        <p class="service-pain" lang="uk">Товсті, громіздкі нігті, які легко ламаються та пошкоджують натуральний ніготь.</p>
+        <p class="service-result" lang="da">Slim opbygning med apex-forstærkning for let, stærk finish i 4–5 uger.</p>
+        <p class="service-result" lang="en">Slim apex reinforcement for lightweight, durable strength lasting 4–5 weeks.</p>
+        <p class="service-result" lang="uk">Тонке зміцнення з апекс-підтримкою для легкої, міцної форми на 4–5 тижнів.</p>
+        <p class="service-meta">fra 400 kr. / 75–90 min</p>
+      </div>
+
+      <div class="service-card">
+        <h3 lang="da">Medicinsk Spa-pedicure</h3>
+        <h3 lang="en">Medical-Grade Spa Pedicure</h3>
+        <h3 lang="uk">Медичний Спа-Педикюр</h3>
+        <p class="service-pain" lang="da">Usikkerhed om hygiejne og bekymring over redskaber der ikke er ordentligt rengjorte.</p>
+        <p class="service-pain" lang="en">Uncertainty about hygiene and worry over instruments that may not be properly cleaned.</p>
+        <p class="service-pain" lang="uk">Невпевненість у гігієні та занепокоєння щодо інструментів, які можуть бути недостатньо чистими.</p>
+        <p class="service-result" lang="da">Sterile engangsredskaber, skånsom fjernelse af hård hud og 4–6 ugers velplejet resultat.</p>
+        <p class="service-result" lang="en">Sterile single-use instruments, gentle callus care, and 4–6 weeks of neat, comfortable results.</p>
+        <p class="service-result" lang="uk">Стерильні одноразові інструменти, делікатне видалення натоптишів та 4–6 тижнів доглянутого результату.</p>
+        <p class="service-meta">fra 300 kr. / 30–120 min</p>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- About -->
+<section class="about-section">
+  <div class="container">
+    <h2 class="section-heading" lang="da">Om Mig</h2>
+    <h2 class="section-heading" lang="en">About Me</h2>
+    <h2 class="section-heading" lang="uk">Про Мене</h2>
+    <div class="about-layout">
+      <div class="about-name-block">
+        <p class="about-name" lang="da">Tetiana</p>
+        <p class="about-name" lang="en">Tetiana</p>
+        <p class="about-name" lang="uk">Тетяна</p>
+        <span class="about-role" lang="da">Negletekniker &amp; Ejer</span>
+        <span class="about-role" lang="en">Nail Technician &amp; Owner</span>
+        <span class="about-role" lang="uk">Майстер манікюру та власниця</span>
+      </div>
+      <div class="about-text">
+        <p lang="da">Jeg driver Zelenska Studio alene. Hvert besøg er personligt: en kunde ad gangen, ingen skift mellem behandlere, ingen forhastet tid. Du taler direkte med den person, der udfører din behandling fra konsultation til efterpleje.</p>
+        <p lang="en">I run Zelenska Studio on my own. Every visit is personal: one client at a time, no handoffs between technicians, no rushed appointments. You speak directly with the person caring for your nails from consultation to aftercare.</p>
+        <p lang="uk">Я веду Zelenska Studio самостійно. Кожен візит — особистий: один клієнт за раз, без передачі іншим майстрам, без поспіху. Ви спілкуєтесь безпосередньо з тією людиною, яка доглядає за вашими нігтями від консультації до рекомендацій з догляду.</p>
+        <p lang="da">Rolig tid i stolen, direkte kommunikation og fuld kontinuitet fra gang til gang.</p>
+        <p lang="en">Unhurried chair time, clear communication, and full continuity visit after visit.</p>
+        <p lang="uk">Спокійний час у кріслі, пряме спілкування та повна послідовність від візиту до візиту.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Your Visit -->
+<section class="visit-section">
+  <div class="container">
+    <h2 class="section-heading" lang="da">Din Oplevelse</h2>
+    <h2 class="section-heading" lang="en">Your Visit</h2>
+    <h2 class="section-heading" lang="uk">Ваш Візит</h2>
+    <div class="visit-steps">
+      <div class="visit-step">
+        <h3 lang="da">Book online</h3>
+        <h3 lang="en">Book online</h3>
+        <h3 lang="uk">Запишіться онлайн</h3>
+        <p lang="da">Vælg behandling og tid døgnet rundt med øjeblikkelig bekræftelse.</p>
+        <p lang="en">Choose your service and time slot 24/7 with instant confirmation.</p>
+        <p lang="uk">Оберіть послугу та час цілодобово з миттєвим підтвердженням.</p>
+      </div>
+      <div class="visit-step">
+        <h3 lang="da">Velkommen</h3>
+        <h3 lang="en">Welcome</h3>
+        <h3 lang="uk">Ласкаво просимо</h3>
+        <p lang="da">Ankom til en rolig, privat klinik. Én kunde ad gangen, ingen venteværelse.</p>
+        <p lang="en">Arrive at a calm, private studio. One client at a time, no waiting room.</p>
+        <p lang="uk">Прийдіть до спокійної, приватної студії. Один клієнт за раз, без черги.</p>
+      </div>
+      <div class="visit-step">
+        <h3 lang="da">Steril åbning</h3>
+        <h3 lang="en">Sterile opening</h3>
+        <h3 lang="uk">Стерильне відкриття</h3>
+        <p lang="da">Se den forseglede sterilpose åbnes ved din plads, foran dig.</p>
+        <p lang="en">Watch your sealed sterile pouch opened right at your station.</p>
+        <p lang="uk">Побачте, як запечатаний стерильний пакет відкривається при вас.</p>
+      </div>
+      <div class="visit-step">
+        <h3 lang="da">Perfekt resultat</h3>
+        <h3 lang="en">Perfect result</h3>
+        <h3 lang="uk">Ідеальний результат</h3>
+        <p lang="da">Gå herfra med holdbare negle i 3–6 uger.</p>
+        <p lang="en">Leave with chip-free nails lasting 3–6 weeks.</p>
+        <p lang="uk">Вийдіть з ідеальними нігтями на 3–6 тижнів.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Testimonials -->
+<section class="testimonials-section">
+  <div class="container">
+    <h2 class="section-heading" lang="da">Kundeanmeldelser</h2>
+    <h2 class="section-heading" lang="en">What Clients Say</h2>
+    <h2 class="section-heading" lang="uk">Відгуки Клієнтів</h2>
+    <div class="testimonials-list">
+
+      <div class="testimonial">
+        <blockquote class="testimonial-quote">
+          <span class="testimonial-mark" aria-hidden="true">&ldquo;</span>
+          <span lang="da">I am very happy with the result of the pedicure and the quality. During the treatment I felt comfortable, and Tetiana was communicating well and professionally.</span>
+          <span lang="en">I am very happy with the result of the pedicure and the quality. During the treatment I felt comfortable, and Tetiana was communicating well and professionally.</span>
+          <span lang="uk">Я дуже задоволена результатом педикюру та його якістю. Під час процедури мені було комфортно, а Тетяна спілкувалася професійно та приємно.</span>
+        </blockquote>
+        <p class="testimonial-author" lang="da">Emma K. <span class="testimonial-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</span></p>
+        <p class="testimonial-author" lang="en">Emma H. <span class="testimonial-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</span></p>
+        <p class="testimonial-author" lang="uk">Emma H. <span class="testimonial-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</span></p>
+      </div>
+
+      <div class="testimonial">
+        <blockquote class="testimonial-quote">
+          <span class="testimonial-mark" aria-hidden="true">&ldquo;</span>
+          <span lang="da">Meget dygtig negletekniker.</span>
+          <span lang="en">Used to dread salon bills jumping at checkout, so seeing the exact flat price upfront was a huge relief. My cuticles weren't nicked once, and my gel still looks fresh after four weeks.</span>
+          <span lang="uk">Раніше боялася, що рахунок у салоні виявиться більшим, ніж очікувала. Побачити точну фіксовану ціну одразу — це велике полегшення. Кутикулу жодного разу не порізали, а гель виглядає свіжим навіть через чотири тижні.</span>
+        </blockquote>
+        <p class="testimonial-author" lang="da">Tina V. <span class="testimonial-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</span></p>
+        <p class="testimonial-author" lang="en">Sara L. <span class="testimonial-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</span></p>
+        <p class="testimonial-author" lang="uk">Sara L. <span class="testimonial-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</span></p>
+      </div>
+
+      <div class="testimonial">
+        <blockquote class="testimonial-quote">
+          <span class="testimonial-mark" aria-hidden="true">&ldquo;</span>
+          <span lang="da">God behandling af Tetiana.</span>
+          <span lang="en">I have sensitive skin and always worry about hygiene. Watching the sterile pouch open in front of me and getting gentle, unhurried care made all the difference.</span>
+          <span lang="uk">У мене чутлива шкіра, і я завжди хвилююся через гігієну. Побачити, як стерильний пакет відкривається прямо переді мною, та отримати делікатний, неквапливий догляд — це змінило все.</span>
+        </blockquote>
+        <p class="testimonial-author" lang="da">Anne-Lise H. <span class="testimonial-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</span></p>
+        <p class="testimonial-author" lang="en">Nadia K. <span class="testimonial-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</span></p>
+        <p class="testimonial-author" lang="uk">Nadia K. <span class="testimonial-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</span></p>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- FAQ -->
+<section class="faq-section">
+  <div class="container">
+    <h2 class="section-heading" lang="da">Ofte Stillede Spørgsmål</h2>
+    <h2 class="section-heading" lang="en">Frequently Asked Questions</h2>
+    <h2 class="section-heading" lang="uk">Часті Запитання</h2>
+    <div class="faq-list">
+
+      <details class="faq-item">
+        <summary>
+          <span lang="da">Hvad er tør e-file manicure?</span>
+          <span lang="en">What is dry e-file manicure?</span>
+          <span lang="uk">Що таке сухий апаратний манікюр?</span>
+        </summary>
+        <div class="faq-answer">
+          <span lang="da">I stedet for at klippe neglebånd med en tang, som kan forårsage blødning og smerter, bruger jeg en præcisionsfræser til forsigtigt at skubbe og forfine neglebåndet. Ingen snit, ingen ømhed.</span>
+          <span lang="en">Instead of cutting cuticles with nippers, which can cause bleeding and pain, I use a precision e-file to gently push and refine the cuticle. No cuts, no soreness.</span>
+          <span lang="uk">Замість обрізання кутикули кусачками, що може спричинити кровотечу та біль, я використовую апарат для делікатного відсування та обробки кутикули. Без порізів, без болю.</span>
+        </div>
+      </details>
+
+      <details class="faq-item">
+        <summary>
+          <span lang="da">Hvordan steriliseres redskaberne?</span>
+          <span lang="en">How are the tools sterilized?</span>
+          <span lang="uk">Як стерилізуються інструменти?</span>
+        </summary>
+        <div class="faq-answer">
+          <span lang="da">Alle metalredskaber gennemgår 3 trin: kemisk desinfektion, ultralydskavitation og medicinsk autoklavering. Den forseglede pose åbnes foran dig. Alle file og buffere er til engangsbrug og kasseres efter hver klient.</span>
+          <span lang="en">Every metal instrument goes through 3 stages: chemical disinfection, ultrasonic cleaning, and medical-grade autoclaving. The sealed pouch is opened in front of you. All files and buffers are single-use and disposed of after each client.</span>
+          <span lang="uk">Кожен металевий інструмент проходить 3 етапи: хімічна дезінфекція, ультразвукове очищення та медичне автоклавування. Запечатаний пакет відкривається при вас. Усі пилки та бафи одноразові й утилізуються після кожного клієнта.</span>
+        </div>
+      </details>
+
+      <details class="faq-item">
+        <summary>
+          <span lang="da">Er der skjulte tillæg?</span>
+          <span lang="en">Are there hidden fees?</span>
+          <span lang="uk">Чи є приховані доплати?</span>
+        </summary>
+        <div class="faq-answer">
+          <span lang="da">Nej. Alle priser er faste og inkluderer forberedelse, neglebåndspleje og fjernelse af mit eget arbejde. Tilvalg som fransk design eller ombre er +50 kr. og vælges altid af dig inden booking.</span>
+          <span lang="en">No. All prices are flat rates that include prep, cuticle care, and removal of my prior work. Add-ons like French design or ombre are +50 kr. and always chosen by you before booking.</span>
+          <span lang="uk">Ні. Усі ціни фіксовані та включають підготовку, обробку кутикули та зняття попередньої роботи. Додаткові послуги (французький дизайн, омбре) +50 kr. і обираються вами при записі.</span>
+        </div>
+      </details>
+
+      <details class="faq-item">
+        <summary>
+          <span lang="da">Hvor længe holder resultatet?</span>
+          <span lang="en">How long do results last?</span>
+          <span lang="uk">Як довго тримається результат?</span>
+        </summary>
+        <div class="faq-answer">
+          <span lang="da">Gelmanicure: 3–5 uger. Builder-overlæg: 4–5 uger. Pedicure: 4–6 uger. Holdbarhed afhænger af neglens vækst og daglig brug.</span>
+          <span lang="en">Gel manicure: 3–5 weeks. Builder overlay: 4–5 weeks. Pedicure: 4–6 weeks. Duration depends on nail growth and daily wear.</span>
+          <span lang="uk">Гель-манікюр: 3–5 тижнів. Зміцнення: 4–5 тижнів. Педикюр: 4–6 тижнів. Тривалість залежить від росту нігтів та щоденного навантаження.</span>
+        </div>
+      </details>
+
+      <details class="faq-item">
+        <summary>
+          <span lang="da">Kan jeg aflyse eller ændre min tid?</span>
+          <span lang="en">Can I cancel or reschedule?</span>
+          <span lang="uk">Чи можу я скасувати або перенести запис?</span>
+        </summary>
+        <div class="faq-answer">
+          <span lang="da">Ja, gratis op til 24 timer før din tid. Brug linket i din bekræftelses-SMS eller -email.</span>
+          <span lang="en">Yes, free of charge up to 24 hours before your appointment. Use the link in your confirmation SMS or email.</span>
+          <span lang="uk">Так, безкоштовно щонайменше за 24 години до прийому. Скористайтеся посиланням у SMS або email підтвердження.</span>
+        </div>
+      </details>
+
+      <details class="faq-item">
+        <summary>
+          <span lang="da">Bruger I HEMA-fri produkter?</span>
+          <span lang="en">Do you use HEMA-free products?</span>
+          <span lang="uk">Чи використовуєте ви HEMA-free продукти?</span>
+        </summary>
+        <div class="faq-answer">
+          <span lang="da">Ja. Jeg bruger EU-certificerede, HEMA-fri gelsystemer for at minimere risikoen for allergiske reaktioner og kontaktdermatitis.</span>
+          <span lang="en">Yes. I use EU-certified, HEMA-free gel systems to minimize the risk of allergic reactions and contact dermatitis.</span>
+          <span lang="uk">Так. Я використовую сертифіковані в ЄС HEMA-free гелеві системи для мінімізації ризику алергічних реакцій та контактного дерматиту.</span>
+        </div>
+      </details>
+
+    </div>
+  </div>
+</section>
+
+<!-- Booking & Contact -->
+<section class="booking-section">
+  <div class="container">
+    <h2 class="section-heading" lang="da">Book Din Tid På Få Sekunder</h2>
+    <h2 class="section-heading" lang="en">Book Your Appointment in Seconds</h2>
+    <h2 class="section-heading" lang="uk">Запишіться за Кілька Секунд</h2>
+    <p class="booking-sub" lang="da">Vælg behandling og ledig tid døgnet rundt med straksbekræftelse og automatisk SMS-påmindelse. Ændr eller aflys senest 24 timer før uden gebyr.</p>
+    <p class="booking-sub" lang="en">Pick your service and open time slot 24/7 with instant confirmation and automated SMS reminders. Reschedule or cancel at least 24 hours ahead with no fee.</p>
+    <p class="booking-sub" lang="uk">Оберіть послугу та вільний час цілодобово з миттєвим підтвердженням та автоматичним SMS-нагадуванням. Перенесіть або скасуйте щонайменше за 24 години без додаткової плати.</p>
+    <a class="cta" href="https://claude.ai/artifact/RHwBc5kHw8zLRT57wjbRCk" target="_blank" rel="noopener">
+      <span lang="da">Book Online Nu</span>
+      <span lang="en">Book Online Now</span>
+      <span lang="uk">Записатися Онлайн</span>
+    </a>
+
+    <div class="contact-grid">
+      <div class="contact-item">
+        <span class="contact-label" lang="da">Telefon</span>
+        <span class="contact-label" lang="en">Phone</span>
+        <span class="contact-label" lang="uk">Телефон</span>
+        <span class="contact-value"><a href="tel:+4591801228">+45 91 80 12 28</a></span>
+      </div>
+      <div class="contact-item">
+        <span class="contact-label">Email</span>
+        <span class="contact-value"><a href="mailto:mama160360@gmail.com">mama160360@gmail.com</a></span>
+      </div>
+      <div class="contact-item">
+        <span class="contact-label">Instagram</span>
+        <span class="contact-value"><a href="https://www.instagram.com/zelenska_studio/" target="_blank" rel="noopener">@zelenska_studio</a></span>
+      </div>
+      <div class="contact-item">
+        <span class="contact-label" lang="da">Adresse</span>
+        <span class="contact-label" lang="en">Address</span>
+        <span class="contact-label" lang="uk">Адреса</span>
+        <span class="contact-value"><a href="https://www.google.com/maps/place/Elmeg%C3%A5rden+9,+7620+N%C3%B8rre+Nissum" target="_blank" rel="noopener">Elmegården 9, 7620 Lemvig</a></span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Footer -->
+<footer class="site-footer">
+  <div class="container">
+    <span class="footer-name">Zelenska Studio</span>
+    <span>CVR 44322242, Elmegården 9, 7620 Lemvig</span>
+  </div>
+</footer>
+
+</div>
+
+<script>
+(function() {
+  var btns = document.querySelectorAll('.lang-btn');
+  btns.forEach(function(btn) {
+    btn.addEventListener('click', function() {
+      var lang = this.getAttribute('data-set-lang');
+      document.getElementById('page').setAttribute('data-lang', lang);
+      btns.forEach(function(b) {
+        var isActive = b.getAttribute('data-set-lang') === lang;
+        b.classList.toggle('active', isActive);
+        b.setAttribute('aria-checked', isActive ? 'true' : 'false');
+      });
+    });
+  });
+})();
+</script>
