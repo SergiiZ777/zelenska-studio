@@ -285,21 +285,29 @@ blockquote { margin: 0; }
 }
 .about-layout {
   display: grid;
-  grid-template-columns: auto 1fr;
+  grid-template-columns: 280px 1fr;
   gap: 48px;
   align-items: start;
 }
-.about-name-block {
+.about-photo-block {
   position: relative;
+}
+.about-photo {
+  width: 100%;
+  aspect-ratio: 4 / 5;
+  object-fit: cover;
+  object-position: center top;
+  border-radius: 8px;
+  display: block;
 }
 .about-name {
   font-family: var(--font-display);
-  font-size: clamp(40px, 6vw, 56px);
+  font-size: clamp(28px, 4vw, 34px);
   font-weight: 400;
   font-style: italic;
   color: var(--gold);
   line-height: 1.05;
-  margin: 0;
+  margin: 14px 0 0;
 }
 .about-role {
   display: block;
@@ -308,7 +316,7 @@ blockquote { margin: 0; }
   font-style: normal;
   font-weight: 500;
   color: var(--mute);
-  margin-top: 10px;
+  margin-top: 6px;
 }
 .about-text p {
   font-size: 16px;
@@ -318,6 +326,30 @@ blockquote { margin: 0; }
   max-width: 520px;
 }
 .about-text p:last-child { margin-bottom: 0; }
+
+/* ── Instagram CTA ── */
+.instagram-section {
+  padding-block: 48px;
+  text-align: center;
+  border-top: 1px solid var(--border);
+}
+.instagram-cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  font-family: var(--font-body);
+  font-size: 15px;
+  font-weight: 500;
+  color: var(--ink);
+  text-decoration: none;
+  padding: 12px 28px;
+  border: 1.5px solid var(--border);
+  border-radius: 6px;
+  transition: border-color 0.15s, color 0.15s;
+}
+.instagram-cta:hover { border-color: var(--gold); color: var(--gold); }
+.instagram-cta:focus-visible { outline: 2px solid var(--gold); outline-offset: 2px; }
+.instagram-cta svg { width: 20px; height: 20px; fill: currentColor; }
 
 /* ── Testimonials ── */
 .testimonials-section { padding-block: 64px; }
@@ -526,7 +558,8 @@ blockquote { margin: 0; }
   .hero-section { padding-block: 48px 40px; }
   .trust-grid { grid-template-columns: 1fr; gap: 24px; }
   .service-cards { grid-template-columns: 1fr; gap: 20px; }
-  .about-layout { grid-template-columns: 1fr; gap: 20px; }
+  .about-layout { grid-template-columns: 1fr; gap: 24px; }
+  .about-photo { max-width: 240px; margin: 0 auto; }
   .contact-grid { flex-direction: column; align-items: center; gap: 18px; }
   .trust-section,
   .services-section,
@@ -666,7 +699,8 @@ blockquote { margin: 0; }
     <h2 class="section-heading" lang="en">About Me</h2>
     <h2 class="section-heading" lang="uk">Про Мене</h2>
     <div class="about-layout">
-      <div class="about-name-block">
+      <div class="about-photo-block">
+        <img class="about-photo" src="/_blob/4a94eb1a7294999f6a8cdb11a38c1ddc" alt="Tetiana — Zelenska Studio" width="280" height="350">
         <p class="about-name" lang="da">Tetiana</p>
         <p class="about-name" lang="en">Tetiana</p>
         <p class="about-name" lang="uk">Тетяна</p>
@@ -904,6 +938,18 @@ blockquote { margin: 0; }
         <span class="contact-value"><a href="https://www.google.com/maps/place/Elmeg%C3%A5rden+9,+7620+N%C3%B8rre+Nissum" target="_blank" rel="noopener">Elmegården 9, 7620 Lemvig</a></span>
       </div>
     </div>
+  </div>
+</section>
+
+<!-- Instagram CTA -->
+<section class="instagram-section">
+  <div class="container">
+    <a class="instagram-cta" href="https://www.instagram.com/zelenska_studio/" target="_blank" rel="noopener">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12s.014 3.668.072 4.948c.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24s3.668-.014 4.948-.072c4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948s-.014-3.667-.072-4.947c-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/></svg>
+      <span lang="da">Se seneste arbejde på Instagram</span>
+      <span lang="en">See latest work on Instagram</span>
+      <span lang="uk">Дивіться останні роботи в Instagram</span>
+    </a>
   </div>
 </section>
 
