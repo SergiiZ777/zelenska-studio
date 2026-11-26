@@ -466,6 +466,132 @@ blockquote { margin: 0; }
   color: var(--ink);
 }
 
+/* ── Price List ── */
+.pricelist-section { padding-block: 64px; }
+.price-tabs {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 28px;
+  flex-wrap: wrap;
+}
+.price-tab {
+  font-family: var(--font-body);
+  font-size: 14px;
+  font-weight: 500;
+  padding: 9px 18px;
+  border: 1.5px solid var(--border);
+  border-radius: 6px;
+  cursor: pointer;
+  background: var(--bg);
+  color: var(--ink-mid);
+  transition: border-color 0.15s, background 0.15s, color 0.15s;
+}
+.price-tab:focus-visible { outline: 2px solid var(--gold); outline-offset: 2px; }
+.price-tab[aria-pressed="true"] {
+  border-color: var(--gold);
+  background: var(--blush);
+  color: var(--ink);
+}
+.price-cat { display: none; }
+.price-cat.active { display: block; }
+.price-rows {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.price-row {
+  display: grid;
+  grid-template-columns: 1fr auto auto;
+  align-items: baseline;
+  gap: 12px;
+  padding: 14px 16px;
+  border-left: 3px solid var(--gold);
+  border-radius: 4px;
+  background: var(--bg-alt);
+}
+.price-row-name {
+  font-family: var(--font-display);
+  font-size: 17px;
+  font-weight: 600;
+  line-height: 1.25;
+  min-width: 0;
+}
+.price-row-dur {
+  font-size: 13px;
+  color: var(--mute);
+  white-space: nowrap;
+}
+.price-row-kr {
+  font-size: 15px;
+  font-weight: 600;
+  white-space: nowrap;
+}
+.price-addons {
+  margin-top: 16px;
+  padding: 14px 16px;
+  border: 1px dashed var(--gold);
+  border-radius: 6px;
+  font-size: 14px;
+  color: var(--ink-mid);
+  line-height: 1.5;
+}
+.price-addons b { color: var(--ink); }
+.price-book-link {
+  display: inline-block;
+  margin-top: 28px;
+  font-size: 15px;
+  font-weight: 500;
+  color: var(--gold);
+  text-decoration: none;
+  border-bottom: 1px solid var(--gold);
+  transition: color 0.15s;
+}
+.price-book-link:hover { color: var(--gold-hover); }
+.price-book-link:focus-visible { outline: 2px solid var(--gold); outline-offset: 2px; }
+
+/* ── Aftercare ── */
+.aftercare-section {
+  background: var(--bg-alt);
+  padding-block: 64px;
+}
+.aftercare-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 20px;
+}
+.aftercare-tip {
+  border-left: 2px solid var(--gold);
+  padding-left: 18px;
+}
+.aftercare-tip h3 {
+  font-family: var(--font-display);
+  font-size: 18px;
+  font-weight: 600;
+  margin: 0 0 6px;
+  line-height: 1.25;
+}
+.aftercare-tip p {
+  font-size: 14px;
+  color: var(--ink-mid);
+  margin: 0;
+  line-height: 1.55;
+}
+
+/* ── Retention note ── */
+.retention-note {
+  margin-top: 24px;
+  font-size: 14px;
+  color: var(--ink-mid);
+  line-height: 1.5;
+  max-width: 420px;
+  margin-left: auto;
+  margin-right: auto;
+  padding: 14px 20px;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  background: color-mix(in srgb, var(--bg) 50%, transparent);
+}
+
 /* ── Your Visit (steps) ── */
 .visit-section { padding-block: 64px; }
 .visit-steps {
@@ -568,6 +694,10 @@ blockquote { margin: 0; }
   .testimonials-section,
   .faq-section { padding-block: 48px; }
   .visit-steps { grid-template-columns: repeat(2, 1fr); gap: 20px; }
+  .aftercare-grid { grid-template-columns: 1fr; }
+  .price-row { grid-template-columns: 1fr auto; }
+  .price-row-dur { grid-column: 1; margin-top: -4px; }
+  .price-row-kr { grid-column: 2; grid-row: 1; }
   .booking-section { padding-block: 56px; }
 }
 
@@ -692,6 +822,164 @@ blockquote { margin: 0; }
   </div>
 </section>
 
+<!-- Price List -->
+<section class="pricelist-section">
+  <div class="container">
+    <h2 class="section-heading" lang="da">Prisliste</h2>
+    <h2 class="section-heading" lang="en">Price List</h2>
+    <h2 class="section-heading" lang="uk">Прайс-лист</h2>
+
+    <div class="price-tabs" role="tablist">
+      <button class="price-tab" role="tab" aria-pressed="true" data-pcat="pm">
+        <span lang="da">Manicure</span><span lang="en">Manicure</span><span lang="uk">Манікюр</span>
+      </button>
+      <button class="price-tab" role="tab" aria-pressed="false" data-pcat="pp">
+        <span lang="da">Pedicure</span><span lang="en">Pedicure</span><span lang="uk">Педикюр</span>
+      </button>
+      <button class="price-tab" role="tab" aria-pressed="false" data-pcat="pf">
+        <span lang="da">Fodbehandling</span><span lang="en">Foot treatment</span><span lang="uk">Подологія</span>
+      </button>
+    </div>
+
+    <!-- Manicure prices -->
+    <div class="price-cat active" id="pm">
+      <div class="price-rows">
+        <div class="price-row">
+          <span class="price-row-name" lang="da">Klassisk manicure</span>
+          <span class="price-row-name" lang="en">Classic manicure</span>
+          <span class="price-row-name" lang="uk">Класичний манікюр</span>
+          <span class="price-row-dur">30 min</span>
+          <span class="price-row-kr">300 kr.</span>
+        </div>
+        <div class="price-row">
+          <span class="price-row-name" lang="da">Kompleks manicure med gel</span>
+          <span class="price-row-name" lang="en">Complex manicure with gel polish</span>
+          <span class="price-row-name" lang="uk">Комплексний манікюр з гель-лаком</span>
+          <span class="price-row-dur">60 min</span>
+          <span class="price-row-kr">350 kr.</span>
+        </div>
+        <div class="price-row">
+          <span class="price-row-name" lang="da">Kompleks manicure med styrkelse (S)</span>
+          <span class="price-row-name" lang="en">Complex manicure with strengthening (S)</span>
+          <span class="price-row-name" lang="uk">Комплексний манікюр зі зміцненням (S)</span>
+          <span class="price-row-dur">120 min</span>
+          <span class="price-row-kr">400 kr.</span>
+        </div>
+        <div class="price-row">
+          <span class="price-row-name" lang="da">Kompleks manicure med styrkelse (M, L)</span>
+          <span class="price-row-name" lang="en">Complex manicure with strengthening (M, L)</span>
+          <span class="price-row-name" lang="uk">Комплексний манікюр зі зміцненням (M, L)</span>
+          <span class="price-row-dur">120 min</span>
+          <span class="price-row-kr">450 kr.</span>
+        </div>
+        <div class="price-row">
+          <span class="price-row-name" lang="da">Negleforlængelse</span>
+          <span class="price-row-name" lang="en">Nail extension</span>
+          <span class="price-row-name" lang="uk">Нарощування нігтів</span>
+          <span class="price-row-dur">150 min</span>
+          <span class="price-row-kr">fra 450 kr.</span>
+        </div>
+      </div>
+      <div class="price-addons">
+        <b lang="da">Tilvalg (+50 kr.):</b>
+        <b lang="en">Add-ons (+50 kr.):</b>
+        <b lang="uk">Додатково (+50 kr.):</b>
+        <span lang="da"> Fransk design, Ombre / Babyboomer, Fjernelse af gel, Reparation af negl</span>
+        <span lang="en"> French design, Ombre / Babyboomer, Gel removal, Nail repair</span>
+        <span lang="uk"> Французький дизайн, Омбре / Бебі-бумер, Зняття гелю, Ремонт нігтя</span>
+      </div>
+    </div>
+
+    <!-- Pedicure prices -->
+    <div class="price-cat" id="pp">
+      <div class="price-rows">
+        <div class="price-row">
+          <span class="price-row-name" lang="da">Fuld pedicure med gel og fodpleje</span>
+          <span class="price-row-name" lang="en">Full pedicure with gel polish &amp; foot care</span>
+          <span class="price-row-name" lang="uk">Повний педикюр з гель-лаком та доглядом за стопами</span>
+          <span class="price-row-dur">120 min</span>
+          <span class="price-row-kr">450 kr.</span>
+        </div>
+        <div class="price-row">
+          <span class="price-row-name" lang="da">Pedicure (tæer + fodpleje)</span>
+          <span class="price-row-name" lang="en">Pedicure (toes + foot care)</span>
+          <span class="price-row-name" lang="uk">Педикюр (пальці + догляд за стопами)</span>
+          <span class="price-row-dur">60 min</span>
+          <span class="price-row-kr">400 kr.</span>
+        </div>
+        <div class="price-row">
+          <span class="price-row-name" lang="da">Pedicure med gel</span>
+          <span class="price-row-name" lang="en">Pedicure with gel polish</span>
+          <span class="price-row-name" lang="uk">Педикюр з гель-лаком</span>
+          <span class="price-row-dur">120 min</span>
+          <span class="price-row-kr">400 kr.</span>
+        </div>
+        <div class="price-row">
+          <span class="price-row-name" lang="da">Klassisk pedicure (uden lak)</span>
+          <span class="price-row-name" lang="en">Classic pedicure (no polish)</span>
+          <span class="price-row-name" lang="uk">Класичний педикюр (без покриття)</span>
+          <span class="price-row-dur">30 min</span>
+          <span class="price-row-kr">300 kr.</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Foot treatment prices -->
+    <div class="price-cat" id="pf">
+      <div class="price-rows">
+        <div class="price-row">
+          <span class="price-row-name" lang="da">Fodpleje</span>
+          <span class="price-row-name" lang="en">Foot care treatment</span>
+          <span class="price-row-name" lang="uk">Догляд за стопами</span>
+          <span class="price-row-dur">30 min</span>
+          <span class="price-row-kr">300 kr.</span>
+        </div>
+        <div class="price-row">
+          <span class="price-row-name" lang="da">Behandling af indgroet negl</span>
+          <span class="price-row-name" lang="en">Ingrown toenail care</span>
+          <span class="price-row-name" lang="uk">Лікування врослого нігтя</span>
+          <span class="price-row-dur">60 min</span>
+          <span class="price-row-kr">fra 200 kr.</span>
+        </div>
+        <div class="price-row">
+          <span class="price-row-name" lang="da">Behandling af vorte under foden</span>
+          <span class="price-row-name" lang="en">Plantar wart care</span>
+          <span class="price-row-name" lang="uk">Видалення підошовної бородавки</span>
+          <span class="price-row-dur">30 min</span>
+          <span class="price-row-kr">350 kr.</span>
+        </div>
+        <div class="price-row">
+          <span class="price-row-name" lang="da">Fjernelse af hård hud</span>
+          <span class="price-row-name" lang="en">Core callus removal</span>
+          <span class="price-row-name" lang="uk">Видалення натоптишів</span>
+          <span class="price-row-dur">60 min</span>
+          <span class="price-row-kr">350 kr.</span>
+        </div>
+        <div class="price-row">
+          <span class="price-row-name" lang="da">Behandling af neglesvamp</span>
+          <span class="price-row-name" lang="en">Fungal nail care</span>
+          <span class="price-row-name" lang="uk">Лікування грибка нігтів</span>
+          <span class="price-row-dur">60 min</span>
+          <span class="price-row-kr">450 kr.</span>
+        </div>
+        <div class="price-row">
+          <span class="price-row-name" lang="da">Behandling af onykolyse</span>
+          <span class="price-row-name" lang="en">Onycholysis care</span>
+          <span class="price-row-name" lang="uk">Лікування оніхолізису</span>
+          <span class="price-row-dur">60 min</span>
+          <span class="price-row-kr">100 kr.</span>
+        </div>
+      </div>
+    </div>
+
+    <a class="price-book-link" href="https://claude.ai/artifact/RHwBc5kHw8zLRT57wjbRCk" target="_blank" rel="noopener">
+      <span lang="da">Book direkte med tid og dato &rarr;</span>
+      <span lang="en">Book directly with date and time &rarr;</span>
+      <span lang="uk">Записатися з вибором дати та часу &rarr;</span>
+    </a>
+  </div>
+</section>
+
 <!-- About -->
 <section class="about-section">
   <div class="container">
@@ -759,6 +1047,54 @@ blockquote { margin: 0; }
         <p lang="en">Leave with chip-free nails lasting 3–6 weeks.</p>
         <p lang="uk">Вийдіть з ідеальними нігтями на 3–6 тижнів.</p>
       </div>
+    </div>
+  </div>
+</section>
+
+<!-- Aftercare Tips -->
+<section class="aftercare-section">
+  <div class="container">
+    <h2 class="section-heading" lang="da">Sådan Holder Dine Negle Længere</h2>
+    <h2 class="section-heading" lang="en">How to Make Your Nails Last</h2>
+    <h2 class="section-heading" lang="uk">Як Зберегти Манікюр Довше</h2>
+    <div class="aftercare-grid">
+
+      <div class="aftercare-tip">
+        <h3 lang="da">Hold hænderne tørre i 2 timer</h3>
+        <h3 lang="en">Keep hands dry for 2 hours</h3>
+        <h3 lang="uk">Тримайте руки сухими 2 години</h3>
+        <p lang="da">Undgå varmt vand, opvask og bad i de første par timer efter behandlingen. Det giver gelen tid til at hærde helt.</p>
+        <p lang="en">Avoid hot water, dishes, and baths for the first couple of hours after your appointment. It lets the gel fully cure.</p>
+        <p lang="uk">Уникайте гарячої води, миття посуду та ванн протягом перших двох годин після процедури. Це дозволяє гелю повністю полімеризуватися.</p>
+      </div>
+
+      <div class="aftercare-tip">
+        <h3 lang="da">Brug handsker ved rengøring</h3>
+        <h3 lang="en">Wear gloves when cleaning</h3>
+        <h3 lang="uk">Використовуйте рукавички при прибиранні</h3>
+        <p lang="da">Rengøringsmidler og opløsningsmidler udtørrer gel og neglebånd. Et par gummihandsker forlænger holdbarheden markant.</p>
+        <p lang="en">Cleaning products and solvents dry out gel and cuticles. A pair of rubber gloves extends wear significantly.</p>
+        <p lang="uk">Миючі засоби та розчинники висушують гель і кутикулу. Гумові рукавички значно подовжують термін носіння.</p>
+      </div>
+
+      <div class="aftercare-tip">
+        <h3 lang="da">Påfør neglebåndsolie dagligt</h3>
+        <h3 lang="en">Apply cuticle oil daily</h3>
+        <h3 lang="uk">Наносіть олію для кутикули щодня</h3>
+        <p lang="da">Bare én dråbe olie om aftenen holder neglebåndet blødt, forhindrer tør hud og giver gelen et pænere udseende mellem besøgene.</p>
+        <p lang="en">Just one drop of oil at bedtime keeps cuticles soft, prevents dry skin, and gives the gel a neater look between visits.</p>
+        <p lang="uk">Лише одна крапля олії перед сном зберігає кутикулу м'якою, запобігає сухості та надає гелю охайного вигляду між візитами.</p>
+      </div>
+
+      <div class="aftercare-tip">
+        <h3 lang="da">Book igen inden 3–5 uger</h3>
+        <h3 lang="en">Rebook within 3–5 weeks</h3>
+        <h3 lang="uk">Запишіться повторно через 3–5 тижнів</h3>
+        <p lang="da">Når gelen vokser ud for meget, øges risikoen for at neglen knækker eller løfter. Regelmæssig vedligeholdelse beskytter din naturnegl.</p>
+        <p lang="en">When gel grows out too far, the risk of breakage and lifting increases. Regular maintenance protects your natural nail.</p>
+        <p lang="uk">Коли гель занадто відростає, зростає ризик зламу та відшарування. Регулярне обслуговування захищає ваш натуральний ніготь.</p>
+      </div>
+
     </div>
   </div>
 </section>
@@ -916,6 +1252,12 @@ blockquote { margin: 0; }
       <span lang="uk">Записатися Онлайн</span>
     </a>
 
+    <div class="retention-note">
+      <span lang="da">Du modtager en automatisk SMS-påmindelse, når det er tid til at booke din næste behandling — så du aldrig mister din neglepleje-rutine.</span>
+      <span lang="en">You'll receive an automatic SMS reminder when it's time to book your next appointment — so you never fall off your nail care schedule.</span>
+      <span lang="uk">Ви отримаєте автоматичне SMS-нагадування, коли прийде час записатися на наступний візит — щоб ваш догляд за нігтями завжди був вчасним.</span>
+    </div>
+
     <div class="contact-grid">
       <div class="contact-item">
         <span class="contact-label" lang="da">Telefon</span>
@@ -975,6 +1317,14 @@ blockquote { margin: 0; }
         b.classList.toggle('active', isActive);
         b.setAttribute('aria-checked', isActive ? 'true' : 'false');
       });
+    });
+  });
+  var ptabs = document.querySelectorAll('.price-tab');
+  ptabs.forEach(function(tab) {
+    tab.addEventListener('click', function() {
+      var cat = this.getAttribute('data-pcat');
+      ptabs.forEach(function(t) { t.setAttribute('aria-pressed', t.getAttribute('data-pcat') === cat ? 'true' : 'false'); });
+      document.querySelectorAll('.price-cat').forEach(function(c) { c.classList.toggle('active', c.id === cat); });
     });
   });
 })();
